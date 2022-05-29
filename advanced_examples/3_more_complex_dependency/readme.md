@@ -23,9 +23,17 @@ make clean & make, 编译器正确报错
 
 其主要思路如下：
 
-一个简单的方法是,将\$(DIR_OBJS)/\%.o:\%.cpp 修改为 \$(DIR\_OBJS)/\%.o:\%.cpp add.h
+一个简单的方法是,将
 
-并将最后的 \$\^ 改为 \$\< (我们不想把.h也送给g++编译)
+```makefile
+$(DIR_OBJS)/%.o:%.cpp 修改为 $(DIR_OBJS)/%.o:%.cpp add.h
+```
+
+并将
+
+```makefile
+$(Compiler) -o $@ -c $^ 改为 $(Compiler) -o $@ -c $<
+```
 
 但是,当.h文件较多时,这种方法很不方便
 
