@@ -1,30 +1,17 @@
-# 自动变量示例
-
-# .PHONY:all
-# all:first second third
-# 	@echo "\$$@ = $@"
-# 	@echo "\$$^ = $^"
-# 	@echo "\$$< = $<"
- 
-# first:
-
-# second:
-
-# third:
-
-# 用自动变量实现ex3
-
-
 .PHONY: clean
-Compiler = g++
-RM = rm
-EXE = addtest
-OBJS = main.o add.o
-$(EXE): $(OBJS)
-	$(Compiler) -o $@ $^
-main.o: main.cpp
-	$(Compiler) -o $@ -c $^
-add.o: add.cpp
-	$(Compiler) -o $@ -c $^
-clean:
-	$(RM) $(EXE) $(OBJS)
+.PHONY: all
+
+# MAKECMDGOALS变量
+# 它表示的是当前用户所输⼊的 make 目标是什么
+# all clean可由make all, make clean触发, make all clean可触发两次
+all clean:
+	@echo "\$$@ = $@"
+	@echo "MAKECMDGOALS = $(MAKECMDGOALS)"
+
+
+# 特殊变量类型：MAKE
+# 表示make命令名是什么
+# 当我们在 Makefile 中调用另⼀个 Makefile 时需要用到这个变量，有利于写⼀个可移植的 Makefile
+make_var:
+	@echo "MAKE = $(MAKE)"
+
