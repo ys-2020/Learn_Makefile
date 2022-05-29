@@ -1,10 +1,8 @@
 #include<iostream>
 using namespace std;
-// #include"add.cpp" // 一般的调用方法，Makefile + extern C 可以不这么搞
-
+// #include"add.cpp" 
 
 extern int add(int a,int b);
-
 
 int main()
 {
