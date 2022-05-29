@@ -16,7 +16,8 @@ make clean & make, 编译器正确报错
 
 我们需要完善文件的依赖关系(增加对.h的依赖)
 
-
+<br/>
+<br/>
 
 修改后的版本在new_version文件夹中
 
@@ -28,13 +29,17 @@ make clean & make, 编译器正确报错
 
 但是,当.h文件较多时,这种方法很不方便
 
+<br/>
+
 事实上, gcc/g++ 可以动态生成文件的依赖关系
 
 利用 gcc/g++ 的-M 选项和-MM 选项可以列出 .c/.cpp 文件的所有依赖关系
 
 -MM 选项与-M 选项的区别是，-MM选项并不列出对于系统头文件的依赖关系
 
-e.g. g++ -MM main.cpp 的输出是： main.o: main.cpp add.h
+例如, g++ -MM main.cpp 的输出是： main.o: main.cpp add.h
+
+<br/>
 
 对于 g++ -MM 的结果, 还有⼀个问题, 因为我们将生成的目标文件放在objs目录中,
 
@@ -42,13 +47,17 @@ e.g. g++ -MM main.cpp 的输出是： main.o: main.cpp add.h
 
 否则,在 Makefile 中,我们没有办法将生成的目标文件放进objs目录。
 
-这是,我们需要用到 sed 工具, 用于查找和替换 g++ 的输出结果
+<br/>
+
+这时,我们需要用到 sed 工具, 用于查找和替换 g++ 的输出结果
 
 例如：
 
 	g++ -MM main.cpp | sed 's,\(.*\)\.o[ :]*,objs/\1.o: ,g'
 		
 可将输出路径改为objs文件夹
+
+<br/>
 
 现在,我们已经有了自动生成依赖关系的⽅法了，那如何将其整合到 Makefile 中呢？
 
@@ -59,5 +68,7 @@ e.g. g++ -MM main.cpp 的输出是： main.o: main.cpp add.h
 为此,我们创建一个新的 deps 目录存放.dep文件。
 
 然后利用.dep文件,获取依赖关系。
+
+<br/>
 
 注意：原网址中此处有些小问题，详见Makefile注释
