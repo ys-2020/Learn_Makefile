@@ -24,7 +24,13 @@ DEPS := $(addprefix $(DIR_DEPS)/, $(DEPS))
 
 CLEANTMP = cleantmp
 
-all: $(EXE) $(CLEANTMP)
+
+# include在all的相应实现依赖之前就被执行
+# 原来的实现中, deps文件夹的创建和.dep文件的创建分属两个依赖,所以include会在.dep文件创建前就开始搜索
+# 所以我们需要对 Makefile 的依赖关系进行调整
+# 即将 deps 目录的创建放在构建依赖之前
+
+all:$(EXE) $(CLEANTMP)
  
 include $(DEPS)
 
